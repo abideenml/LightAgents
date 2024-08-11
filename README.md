@@ -7,23 +7,34 @@ A modular toolkit to craft AI agents and RAG Pipelines.
 
 2024-08-9
 ----------
-Made Changes in the code to log LLM traces to  BrainTrust and to retrieve Input and Completion Tokens from LLMS. Still need to make changes to save those tokens and use them for later.
+Made Changes in the code to log LLM traces to  BrainTrust and to retrieve Input and 
+Completion Tokens from LLMS. Still need to make changes to 
+save those tokens and use them for later.
 
 2024-08-05
 ----------
-Modified the  test "Arxiv Researcher" . The overseer agent decides by viewing the processed titles if there is need to add more research papers to properly answer the user query , after that, the Arxiv Researcher Agent  properly answers the user query using the most appropriate RAG chunks given to it via similarity search. I still need to update the pipeline to save abstract with the titles as well , so the overseer agent has a better idea of the research paper.
+Modified the  test "Arxiv Researcher" . The overseer agent decides by viewing the processed 
+titles if there is need to add more research papers to properly answer the user query , 
+after that, the Arxiv Researcher Agent  properly answers the user query using the most appropriate RAG chunks 
+given to it via similarity search. I still need 
+to update the pipeline to save abstract with the titles as 
+well , so the overseer agent has a better idea of the research paper.
 
 2024-08-03
 ----------
-Finished the document processing pipeline test and started to implement "Arxiv Researcher" ,a test pipeline , to utilize the Rag tools incombination with mem0 agent.
+Finished the document processing pipeline test and started to implement "Arxiv Researcher" ,a 
+test pipeline , to utilize the Rag tools incombination with mem0 agent.
 
 2024-08-02
 ----------
-Created functions to save make dense embeddings via hugging face models and sparse vectors using fastembed library and to store these vectors in qdrant. Also made functions to implement hybrid search or hybrid search.
+Created functions to save make dense embeddings via hugging face models and sparse vectors using 
+fastembed library and to store these vectors in qdrant. Also 
+made functions to implement hybrid search or hybrid search.
 
 2024-08-01
 ----------
-Created functions to help extract information from any document , process them into chunks , utilized gpt-4o model to gather information about images present in the documents and insert this information instead of the image url.
+Created functions to help extract information from any document , process them into chunks , 
+utilized gpt-4o model to gather information about images present in the documents and insert this information instead of the image url.
 
 2024-07-28
 ----------
