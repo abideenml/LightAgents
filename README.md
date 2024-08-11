@@ -53,8 +53,8 @@ Create an agent class and a tool class to create an AI agent which can utilize f
 
 Here are the steps to use this Respository!:
 
-1. `git clone https://github.com/itsAdee/Light-Agents`
-2. Navigate into project directory `cd Light-Agents`
+1. `git clone https://github.com/abideenml/LightAgents`
+2. Navigate into project directory `cd LightAgents`
 3. Install poetry via `pip install poetry .`
 4. Run the command `poetry install` to install all the required packages.
 5. Run `poetry shell` to created a new venv with all the required packages.
@@ -97,13 +97,13 @@ Here are the core features of Light Agents
 If you find this code useful, please cite the following:
 
 ```
-@misc{Zain2024Light.Agents,
-  author = {Zain, Abideen , Adeel,Qureshi },
-  title = {Light.Agents},
+@misc{Zain2024LightAgents,
+  author = {Zain, Abideen , Adeel,Qureshi},
+  title = {LightAgents},
   year = {2024},
   publisher = {GitHub},
   journal = {GitHub repository},
-  howpublished = {\url{https://github.com/itsAdee/Light-Agents}},
+  howpublished = {\url{https://github.com/abideenml/LightAgents}},
 }
 ```
 
