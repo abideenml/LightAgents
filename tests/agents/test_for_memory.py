@@ -36,9 +36,6 @@ class ResponseModel(BaseModel):
 # Initialize Agent
 agent = Agent(client=client, model_name="llama3", system_prompt_generator=system_prompt_generator, memory_buffer=memory_buff)
 
-# agent.store_message("My name is Adeel", "user")
-# agent.store_message("Hi", "assistant")
-# agent.store_message("How are you?", "user")
 resp = agent.run(ResponseModel, user_message="What is my name?", last_k_messages=5)
 
 print(resp)

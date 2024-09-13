@@ -34,16 +34,18 @@ client = instructor.from_openai(OpenAI(
 system_prompt_generator = SimpleSystemPromptGenerator(goal="Assist the user in academic research by providing information or performing actions related to research papers.",
                                                       background="You are a personal AI tutor, explain the concepts, help in understanding the research papers, and provide the summary of the research papers.")
 
+system_prompt = system_prompt_generator.generate()
+
 ## response model
 class Response(BaseModel):
     message: str
 
 
 # Create mem0 powered agent
-agent = MemoAgent(client=client, model_name="gpt-3.5-turbo", system_prompt_generator=system_prompt_generator, memo_config=config)
+agent = MemoAgent(client=client, model_name="gpt-3.5-turbo", system_prompt=system_prompt, memo_config=config)
 
 
 while True:
     user_message = input("User: ")
-    response = agent.run(response_model=Response, user_message=user_message, user_id="user_1")
+    response = agent.run(response_model=Response, role="user", content=user_message , user_id="researcher_12")
     print(f"System: {response.message}")

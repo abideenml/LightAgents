@@ -11,16 +11,13 @@ from LightAgents.systemprompt.systemprompt import SimpleSystemPromptGenerator
 from tests.agents.defined_tools import check_availability_tool, add_item_tool
 import instructor
 import dotenv
-from openai import OpenAI
-from braintrust import init_logger , wrap_openai
+from groq import Groq
 
 
 
 dotenv.load_dotenv('.env')
 
-Brain_trust_key = os.getenv('BRAIN_TRUST_KEY')
 
-init_logger(project_id="84f75858-b568-4206-a9f7-a8610fbee0d2" , api_key=Brain_trust_key)
 
 # Define the response models
 class ResponseModel(BaseModel):
@@ -31,20 +28,23 @@ class ResponseModel(BaseModel):
 
 # System prompt setup for a hotel assistant
 goal = "Assist the user by providing information or performing actions related to hotel inventory."
-background = "You are a helpful hotel assistant with access to inventory management tools. You can check the availability of items and add new items to the inventory.If the user asks for an item and it's not available, you can offer to add it to the inventory."
+background = '''
+-You are a helpful hotel assistant with access to inventory management tools. You can check the availability of items and add new items to the inventory.
+-If the user asks for an item and it's not available, you can offer to add it to the inventory.
+-The user will let you know about the response of the tool you executed.
+'''
 system_prompt_generator = SimpleSystemPromptGenerator(goal=goal, background=background)
 system_prompt = system_prompt_generator.generate()
 
 # Tools setup
 tools = [check_availability_tool, add_item_tool]
 
-OPEN_API_KEY = os.getenv("OPENAI_API_KEY")
+Groq_API_KEY = os.getenv("GROQ_API_KEY")
 
 # Agent setup
-client = instructor.patch(wrap_openai(OpenAI( 
-    api_key=OPEN_API_KEY)), mode=instructor.Mode.JSON )
+client = instructor.from_groq(Groq(api_key=Groq_API_KEY) , mode=instructor.Mode.JSON) 
 
-hotel_assistant = Agent(client=client, model_name="gpt-3.5-turbo", system_prompt=system_prompt, tools=tools)
+hotel_assistant = Agent(client=client, model_name="llama-3.1-70b-versatile", system_prompt=system_prompt, tools=tools)
 
 while True:
     user_message = input("You: ")
@@ -60,7 +60,7 @@ while True:
         tool_response = hotel_assistant.run_tool_sync(tool_execution)
         print(f"System (Internal): {tool_response.message}")
         print(f"System (Internal): {tool_response.tool_output}")
-        resp = hotel_assistant.run(response_model=ResponseModel,role="user" ,content="Response of the tool:"+ str(tool_response.tool_output))
+        resp = hotel_assistant.run(response_model=ResponseModel,role="user" ,content=f"Response of the tool:{tool_response.tool_output}")
         print(f"System: {resp.message}")
     else:
         print(f"System: {resp.message}")

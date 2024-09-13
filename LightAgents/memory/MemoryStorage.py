@@ -1,6 +1,9 @@
 import sqlite3
 
 class MemoryStorage:
+    '''
+    MemoryStorage class is responsible for storing and loading messages from the database.
+    '''
     def __init__(self, db_name='memory_buffer.db'):
         self.db_connection = sqlite3.connect(db_name)
         self.db_cursor = self.db_connection.cursor()

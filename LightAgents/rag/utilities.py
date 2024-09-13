@@ -5,10 +5,12 @@ import uuid
 from pydantic import BaseModel
 
 
+# Function to encode an image to base64
 def encode_image(image_path):
     with open(image_path, "rb") as image_file:
         return base64.b64encode(image_file.read()).decode('utf-8')
-    
+
+# Function to encode all images in a folder to base64
 def encode_images_in_folder(folder_path):
     encoded_images = {}
     for image in os.listdir(folder_path):
@@ -16,9 +18,11 @@ def encode_images_in_folder(folder_path):
         encoded_images[image] = encode_image(image_path)
     return encoded_images
 
+# Function to decode a base64 encoded image
 class ImageDescriptionResponse(BaseModel):
     message: str
 
+# Function to get the description of an image using OpenAI or Ollama
 def get_image_description_ollama_or_openai(encoded_image,client,response_model = ImageDescriptionResponse,model= "gpt-4o-mini"):
     messages = [
         {
@@ -48,6 +52,7 @@ def get_image_description_ollama_or_openai(encoded_image,client,response_model =
     )
     return resp.message
 
+# Function to append descriptions to a markdown file
 def append_descriptions_to_markdown(md_text, image_descriptions, image_folder):
     for image, description in image_descriptions.items():
         image_path = image_folder + "/" + image
@@ -56,6 +61,7 @@ def append_descriptions_to_markdown(md_text, image_descriptions, image_folder):
         md_text = md_text.replace(md_image_tag, md_description)
     return md_text
 
+# Function to create a unique id for a chunk
 def create_unique_id(chunk_name):
     return str(uuid.uuid5(uuid.NAMESPACE_DNS, chunk_name))
 
@@ -80,6 +86,7 @@ def read_markdown_file(file_path):
         return None
     
 
+# Function to get image description asynchronously
 async def get_image_description_ollama_or_openai_async(encoded_image, client, response_model=ImageDescriptionResponse, model="gpt-4o-mini"):
     messages = [
         {

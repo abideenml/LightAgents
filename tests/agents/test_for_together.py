@@ -1,6 +1,8 @@
 import os
 import sys
 
+import openai
+
 # Add the root directory of your project to the Python path
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../../')))
 
@@ -11,16 +13,13 @@ from LightAgents.systemprompt.systemprompt import SimpleSystemPromptGenerator
 from tests.agents.defined_tools import check_availability_tool, add_item_tool
 import instructor
 import dotenv
-from openai import OpenAI
-from braintrust import init_logger , wrap_openai
+
 
 
 
 dotenv.load_dotenv('.env')
 
-Brain_trust_key = os.getenv('BRAIN_TRUST_KEY')
 
-init_logger(project_id="84f75858-b568-4206-a9f7-a8610fbee0d2" , api_key=Brain_trust_key)
 
 # Define the response models
 class ResponseModel(BaseModel):
@@ -38,13 +37,16 @@ system_prompt = system_prompt_generator.generate()
 # Tools setup
 tools = [check_availability_tool, add_item_tool]
 
-OPEN_API_KEY = os.getenv("OPENAI_API_KEY")
+TOGETHER_API_KEY = os.getenv("TOGETHER_API_KEY")
 
 # Agent setup
-client = instructor.patch(wrap_openai(OpenAI( 
-    api_key=OPEN_API_KEY)), mode=instructor.Mode.JSON )
+client = openai.OpenAI(
+    base_url="https://api.together.xyz/v1",
+    api_key=TOGETHER_API_KEY,
+)
+client = instructor.from_openai(client)
 
-hotel_assistant = Agent(client=client, model_name="gpt-3.5-turbo", system_prompt=system_prompt, tools=tools)
+hotel_assistant = Agent(client=client, model_name="meta-llama/Meta-Llama-3.1-405B-Instruct-Turbo", system_prompt=system_prompt, tools=tools)
 
 while True:
     user_message = input("You: ")
@@ -60,7 +62,7 @@ while True:
         tool_response = hotel_assistant.run_tool_sync(tool_execution)
         print(f"System (Internal): {tool_response.message}")
         print(f"System (Internal): {tool_response.tool_output}")
-        resp = hotel_assistant.run(response_model=ResponseModel,role="user" ,content="Response of the tool:"+ str(tool_response.tool_output))
+        resp = hotel_assistant.run(response_model=ResponseModel,role="user" ,content="Response of the tool:"+ str(tool_response.tool_output) + 'Please answer the user query')
         print(f"System: {resp.message}")
     else:
         print(f"System: {resp.message}")

@@ -5,15 +5,19 @@ A modular toolkit to craft AI agents and RAG Pipelines.
 
 ## Development log
 
+2024-09-11
+----------
+created a simple graph rag pipeline, an example utilizing monte carlo tree simulation, and an example highlighting mixture of agents approach.
+
 2024-08-9
 ----------
-Made Changes in the code to log LLM traces to  BrainTrust and to retrieve Input and 
+made Changes in the code to log LLM traces to  BrainTrust and to retrieve Input and 
 Completion Tokens from LLMS. Still need to make changes to 
 save those tokens and use them for later.
 
 2024-08-05
 ----------
-Modified the  test "Arxiv Researcher" . The overseer agent decides by viewing the processed 
+modified the  test "Arxiv Researcher" . The overseer agent decides by viewing the processed 
 titles if there is need to add more research papers to properly answer the user query , 
 after that, the Arxiv Researcher Agent  properly answers the user query using the most appropriate RAG chunks 
 given to it via similarity search. I still need 
@@ -22,27 +26,27 @@ well , so the overseer agent has a better idea of the research paper.
 
 2024-08-03
 ----------
-Finished the document processing pipeline test and started to implement "Arxiv Researcher" ,a 
+finished the document processing pipeline test and started to implement "Arxiv Researcher" ,a 
 test pipeline , to utilize the Rag tools incombination with mem0 agent.
 
 2024-08-02
 ----------
-Created functions to save make dense embeddings via hugging face models and sparse vectors using 
+created functions to save make dense embeddings via hugging face models and sparse vectors using 
 fastembed library and to store these vectors in qdrant. Also 
 made functions to implement hybrid search or hybrid search.
 
 2024-08-01
 ----------
-Created functions to help extract information from any document , process them into chunks , 
+created functions to help extract information from any document , process them into chunks , 
 utilized gpt-4o model to gather information about images present in the documents and insert this information instead of the image url.
 
 2024-07-28
 ----------
-Implement various functions to calculate tokens through models available at hugging face and tiktoken.
+implement various functions to calculate tokens through models available at hugging face and tiktoken.
 
 2024-08-23
 ----------
-Used "https://github.com/mem0ai/mem0" to create a new agent class "mem0-agent" which utilizes the dynamic memory provided by mem0.
+used "https://github.com/mem0ai/mem0" to create a new agent class "mem0-agent" which utilizes the dynamic memory provided by mem0.
 
 2024-08-20
 ----------
@@ -54,7 +58,7 @@ integrated instructor  into the agent class to get structured outputs.
 
 2024-08-16
 ----------
-Create an agent class and a tool class to create an AI agent which can utilize functions , and call them.
+create an agent class and a tool class to create an AI agent which can utilize functions , and call them.
 
 ```
 
